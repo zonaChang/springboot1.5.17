@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carl.study.springboot.dao.mapper.StudentMapper">
+
+    <insert id="addStudent" parameterType="com.carl.study.springboot.bean.Student">
+        <selectKey keyColumn="id" keyProperty="id" order="BEFORE" resultType="integer">
+            select SEQ_BOOT_STUDENT.nextval from dual
+        </selectKey>
+        insert into t_boot_student (ID, name, address, create_time, update_time)
+        values (#{id}, #{name}, #{address, jdbcType=VARCHAR}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="modifyStudentById">
+        update t_boot_student t set t.update_time=#{updateTime}
+        where t.id=#{id}
+    </update>
+
+    <select id="queryStudentById" resultType="com.carl.study.springboot.bean.Student">
+        select t.id, t.name, t.address, t.create_time, t.update_time
+        from t_boot_student t
+        where t.id=#{id}
+    </select>
+
+</mapper>
